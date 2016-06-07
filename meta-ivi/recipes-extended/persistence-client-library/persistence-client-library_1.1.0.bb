@@ -35,6 +35,10 @@ FILES_${PN}-dev += " \
     "
 
 do_install_append() {
+    if [ "${libdir}" != "/usr/lib" ]; then
+        perl -pi -e 's|/usr/lib/|${libdir}/|' ${D}${sysconfdir}/pclCustomLibConfigFile.cfg
+    fi
+
     install -d ${D}${sysconfdir}/dbus-1/system.d
     install -m 0644 ${S}/config/org.genivi.persistence.admin.conf ${D}${sysconfdir}/dbus-1/system.d
 }
